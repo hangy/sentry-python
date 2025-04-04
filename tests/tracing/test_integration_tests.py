@@ -66,7 +66,8 @@ def test_continue_from_headers(
     envelopes = capture_envelopes()
 
     # make a parent transaction (normally this would be in a different service)
-    with start_transaction(name="hi", sampled=True if sample_rate == 0 else None):
+    with start_transaction(name="hi") as txn:
+        txn.sampled = True if sample_rate == 0 else None
         with start_span() as old_span:
             old_span.sampled = parent_sampled
             headers = dict(
