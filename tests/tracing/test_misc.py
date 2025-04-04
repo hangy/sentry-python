@@ -418,8 +418,7 @@ def test_start_transaction_updates_scope_name_source(sentry_init):
 def test_transaction_dropped_debug_not_started(sentry_init, sampled):
     sentry_init(enable_tracing=True)
 
-    tx = Transaction()
-    tx.sampled = sampled
+    tx = Transaction(sampled=sampled)
 
     with mock.patch("sentry_sdk.tracing.logger") as mock_logger:
         with tx:
@@ -436,11 +435,10 @@ def test_transaction_dropped_debug_not_started(sentry_init, sampled):
         )
 
 
-def test_transaction_droped_sampled_false(sentry_init):
+def test_transaction_dropeed_sampled_false(sentry_init):
     sentry_init(enable_tracing=True)
 
-    tx = Transaction()
-    tx.sampled = False
+    tx = Transaction(sampled=False)
 
     with mock.patch("sentry_sdk.tracing.logger") as mock_logger:
         with sentry_sdk.start_transaction(tx):
